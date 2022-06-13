@@ -10,8 +10,8 @@ namespace DoorsEcsLeo.Server
         public void Run(EcsSystems systems)
         {
             var world = systems.GetWorld();
-            var destinations = world.GetPool<PlayerDestinationPointComponent>();
-            var clientEvents = world.Filter<ClientEventComponent>().Inc<PlayerDestinationPointComponent>().End();
+            var destinations = world.GetPool<PlayerDestinationEventComponent>();
+            var clientEvents = world.Filter<ClientEventComponent>().Inc<PlayerDestinationEventComponent>().End();
             var targets = world.GetPool<TargetMovingComponent>();
             var movablePlayers = world.Filter<PlayerComponent>().Inc<TargetMovingComponent>().End();
 

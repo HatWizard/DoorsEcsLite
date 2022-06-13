@@ -21,7 +21,7 @@ namespace DoorsEcsLeo.Client
             {
                 var screenPos = Input.mousePosition;
                 var ray = Camera.main.ScreenPointToRay(screenPos);
-                if(Physics.Raycast(ray, out RaycastHit hit, 100))
+                if(Physics.Raycast(ray, out RaycastHit hit, 100, Physics.AllLayers, QueryTriggerInteraction.Ignore))
                 {
                     var end = hit.point;
                     CheckPath(end);
@@ -36,7 +36,7 @@ namespace DoorsEcsLeo.Client
 
             var players = world.Filter<PlayerComponent>().Inc<PositionComponent>().End();
             var clientEvents = world.GetPool<ClientEventComponent>();
-            var playerDestinations = world.GetPool<PlayerDestinationPointComponent>();
+            var playerDestinations = world.GetPool<PlayerDestinationEventComponent>();
             var disposables = world.GetPool<DisposableComponent>();
             var positions = world.GetPool<PositionComponent>();
             foreach(var entity in players)
@@ -44,7 +44,7 @@ namespace DoorsEcsLeo.Client
                 ref var pos = ref positions.Get(entity);
                 if(CheckObstacles(pos.Position, endPoint))
                 {
-                    ref var destination = ref _sceneVObjectsTable.RaiseEvent<PlayerDestinationPointComponent>();
+                    ref var destination = ref _sceneVObjectsTable.GenerateEventEntity<PlayerDestinationEventComponent>();
                     destination.Point = endPoint;
                 }
             }
@@ -56,7 +56,7 @@ namespace DoorsEcsLeo.Client
             //выглядит не очень, но иначе нужна еще интеграция с физикой или pathfinding
             var hits = Physics.SphereCast(start, 0.2f, (end-start),
                 out RaycastHit ray, dist, LayerMask.GetMask("SceneObstacle"), QueryTriggerInteraction.Ignore);
-            return Mathf.Abs(end.y)<0.3f && !hits;
+            return Mathf.Abs(end.y)<0.5f && !hits;
         }
     }
 }

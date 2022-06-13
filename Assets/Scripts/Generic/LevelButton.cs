@@ -16,7 +16,8 @@ namespace DoorsEcsLeo.Client
 
         private void OnTriggerEnter(Collider other) 
         {
-            if(other.attachedRigidbody!=null)
+            var vObject = other.attachedRigidbody.GetComponent<VObject>();
+            if(vObject!=null && vObject.IsPlayer)
             {
                 _isPressed = true;
             }    
@@ -42,7 +43,7 @@ namespace DoorsEcsLeo.Client
 
         private void Activate()
         {
-            ref var target = ref _sceneVObjectsTable.RaiseEvent<VObjectInteractionComponent>();
+            ref var target = ref _sceneVObjectsTable.GenerateEventEntity<VObjectInteractionComponent>();
             target.SceneId = _activateVObject.SceneId;
         }
     }

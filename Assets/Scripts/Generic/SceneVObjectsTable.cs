@@ -27,6 +27,19 @@ namespace DoorsEcsLeo
             return _pregeneratedDict.ContainsKey(id);
         }
 
+        public int GetEntity(string id)
+        {
+            var VObjects = _world.GetPool<VObjectComponent>();
+            var VObjectsEntities = _world.Filter<VObjectComponent>().End();
+            foreach(var entity in VObjectsEntities)
+            {
+                var view = VObjects.Get(entity);
+                if(view.SceneId==id) return entity;
+            }
+
+            return -1;
+        }
+
         public VObject GetVObject(string id)
         {
             if(ContainsVObject(id))
@@ -34,7 +47,7 @@ namespace DoorsEcsLeo
             return null;
         }
 
-        public ref T RaiseEvent<T>() where T : struct
+        public ref T GenerateEventEntity<T>() where T : struct
         {
             var entity = _world.NewEntity();
             var pool = _world.GetPool<T>();

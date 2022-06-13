@@ -10,6 +10,7 @@ namespace DoorsEcsLeo.Server
             var world = systems.GetWorld();
             var eventsEntities = world.Filter<ClientEventComponent>().Inc<VObjectInteractionComponent>().End();
             var VObjectsEntities = world.Filter<VObjectComponent>().End();
+            var dirties = world.GetPool<DirtyComponent>();
             
             var VObjects = world.GetPool<VObjectComponent>();
             var events = world.GetPool<VObjectInteractionComponent>();
@@ -23,6 +24,7 @@ namespace DoorsEcsLeo.Server
                     {
                         ref var interactable = ref interactables.Get(VObjectEntity);
                         interactable.State+=interactable.InteractionSpeed;
+                        DirtyFlagSystem.SetAsDirty(eventEntity, dirties);
                     }
                 }
             }

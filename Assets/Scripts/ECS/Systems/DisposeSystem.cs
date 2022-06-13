@@ -1,7 +1,7 @@
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace DoorsEcsLeo.Client
+namespace DoorsEcsLeo.Server
 {
     public class DisposeSystem : IEcsSystem, IEcsRunSystem
     {

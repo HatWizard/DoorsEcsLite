@@ -17,10 +17,10 @@ namespace DoorsEcsLeo.Client
         {
             var world = systems.GetWorld();
             var vObjects = world.GetPool<VObjectComponent>();
-            var movables = world.GetPool<TransitiveMovableComponent>();
+            var movables = world.GetPool<MovableComponent>();
             var positions = world.GetPool<PositionComponent>();
 
-            var entities = world.Filter<VObjectComponent>().End();
+            var entities = world.Filter<VObjectComponent>().Inc<DirtyComponent>().End();
 
             foreach(var entity in entities)
             {
@@ -32,21 +32,34 @@ namespace DoorsEcsLeo.Client
                     {
                         var sceneVObject = _sceneVObjectsTable.GetVObject(VObjectComponent.SceneId);
                         var movableVObject = (MovableVObject) sceneVObject;
-                        var offset = pos.Position - movableVObject.Rigidbody.position;
-                        var dist = (offset).magnitude;
-                        if(dist>5)
-                        {
-                            movableVObject.Rigidbody.position = pos.Position;
-                        }
-                        else if(dist>0.01f)
-                        {
-                            var speed = movables.Get(entity).Speed;
-                            movableVObject.Rigidbody.MovePosition(pos.Position + offset.normalized * speed * Time.deltaTime);
-                        }
+                        var moving = movables.Get(entity);
+                        var dist = (pos.Position - movableVObject.Rigidbody.position).magnitude;
+                        if(moving.TransitionType==TransitionType.Transitive)
+                            MoveTransitive(movableVObject, pos.Position, dist, moving.Speed);
+                        else
+                            MoveImmediate(movableVObject, pos.Position);
                     }
                 }
             }
 
+        }
+
+        private void MoveTransitive(MovableVObject movableVObject, Vector3 position, float distance, float speed)
+        {   
+            var offset = position - movableVObject.Rigidbody.position;
+            if(distance>5)
+            {
+                movableVObject.Rigidbody.position = position;
+            }
+            else if(distance>0.01f)
+            {
+                movableVObject.Rigidbody.MovePosition(position + offset.normalized * speed * Time.deltaTime);
+            }
+        }
+
+        private void MoveImmediate(MovableVObject movableVObject, Vector3 position)
+        {
+            movableVObject.Rigidbody.position = position;
         }
     }
 }
