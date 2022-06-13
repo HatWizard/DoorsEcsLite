@@ -7,10 +7,12 @@ namespace DoorsEcsLeo.Client
     public class PlayerInputSystem : IEcsSystem, IEcsInitSystem, IEcsRunSystem
     {
         private EcsSystems _systems;
+        private SceneVObjectsTable _sceneVObjectsTable;
 
         public void Init(EcsSystems systems)
         {
             _systems = systems;
+            _sceneVObjectsTable = systems.GetShared<SceneVObjectsTable>();
         }
 
         public void Run(EcsSystems systems)
@@ -42,10 +44,7 @@ namespace DoorsEcsLeo.Client
                 ref var pos = ref positions.Get(entity);
                 if(CheckObstacles(pos.Position, endPoint))
                 {
-                    var clientEventEntity = world.NewEntity();
-                    clientEvents.Add(clientEventEntity);
-                    ref var destination = ref playerDestinations.Add(clientEventEntity);
-                    disposables.Add(clientEventEntity);
+                    ref var destination = ref _sceneVObjectsTable.RaiseEvent<PlayerDestinationPointComponent>();
                     destination.Point = endPoint;
                 }
             }
@@ -53,9 +52,11 @@ namespace DoorsEcsLeo.Client
 
         private bool CheckObstacles(Vector3 start, Vector3 end)
         {
+            var dist = (end-start).magnitude;
             //выглядит не очень, но иначе нужна еще интеграция с физикой или pathfinding
-            var hits = Physics.SphereCast(start, 0.2f, (end-start), out RaycastHit ray, LayerMask.GetMask("SceneObstacle"));
-            return Mathf.Abs(end.y)<0.1f && !hits;
+            var hits = Physics.SphereCast(start, 0.2f, (end-start),
+                out RaycastHit ray, dist, LayerMask.GetMask("SceneObstacle"), QueryTriggerInteraction.Ignore);
+            return Mathf.Abs(end.y)<0.3f && !hits;
         }
     }
 }

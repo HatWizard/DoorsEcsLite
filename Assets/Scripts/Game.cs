@@ -20,9 +20,10 @@ namespace DoorsEcsLeo
         private void Awake() 
         {
             SceneContext.Run();
-            SceneVObjectsTable.Init();
-
+            
             World = new EcsWorld();
+
+            SceneVObjectsTable.Init(World);
             
             _serverInstaller = new Server.ServerInstaller();
             _clientInstaller = new Client.ClientInstaller();

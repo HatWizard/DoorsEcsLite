@@ -17,6 +17,7 @@ namespace DoorsEcsLeo.Client
 
             _updateSystems.Add(new PlayerInputSystem());
             _updateSystems.Add(new VObjectsMoverSystem());
+            _updateSystems.Add(new VObjectsInteractionSystem());
             _lateUpdateSystems.Add(new DisposeSystem());
         }
 

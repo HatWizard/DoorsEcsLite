@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DoorsEcsLeo
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class MovableVObject : VObject
     {
         private Rigidbody _rigidBody;
