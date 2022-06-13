@@ -8,7 +8,7 @@ namespace DoorsEcsLeo
 {
     public class SceneVObjectsTable : MonoBehaviour
     {
-        [field: SerializeField] private List<VObject> VObjects;
+        [field: SerializeField] protected List<VObject> VObjects {get; private set;}
         private Dictionary<string, VObject> _pregeneratedDict;
         private EcsWorld _world;
 

@@ -6,7 +6,7 @@ namespace DoorsEcsLeo
 {
     public class VObject : MonoBehaviour
     {
-        [field: SerializeField] public string SceneId {get; set;}
+        [field: SerializeField] public string SceneId {get; private set;}
 
         public bool IsPlayer 
         {

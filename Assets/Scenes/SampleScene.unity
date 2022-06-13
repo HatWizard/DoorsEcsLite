@@ -530,11 +530,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 764292d97d06f2242ba36fd50dd8fe82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  VObjects:
-  - {fileID: 1798857562}
-  - {fileID: 660455975}
+  <VObjects>k__BackingField:
   - {fileID: 179028444}
+  - {fileID: 660455975}
   - {fileID: 303041689}
+  - {fileID: 1798857562}
 --- !u!114 &532056015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activateVObject: {fileID: 179028444}
-  <Mover>k__BackingField: {fileID: 1210029273}
+  _mover: {fileID: 1210029273}
   _delayBeetweenPressed: 0
 --- !u!1 &1397191587
 GameObject:
@@ -1343,7 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _activateVObject: {fileID: 660455975}
-  <Mover>k__BackingField: {fileID: 2014897312}
+  _mover: {fileID: 2014897312}
   _delayBeetweenPressed: 0
 --- !u!4 &2014897314
 Transform:

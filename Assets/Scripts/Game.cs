@@ -8,8 +8,8 @@ namespace DoorsEcsLeo
 {
     public class Game : MonoBehaviour
     {
-        [field: SerializeField] private SceneContext SceneContext {get; set;}
-        [field: SerializeField] private SceneVObjectsTable SceneVObjectsTable {get; set;}
+        [field: SerializeField] public SceneContext SceneContext {get; private set;}
+        [field: SerializeField] public SceneVObjectsTable SceneVObjectsTable {get; private set;}
 
         public EcsWorld World {get; private set;}
 

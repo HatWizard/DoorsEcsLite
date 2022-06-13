@@ -8,10 +8,10 @@ namespace DoorsEcsLeo.Client
 {
     public class LevelButton : MonoBehaviour
     {
-        [Inject] private SceneVObjectsTable _sceneVObjectsTable {get; set;}
-        [field: SerializeField] private VObject _activateVObject;
-        [field: SerializeField] private Mover Mover {get; set;}
-        [field: SerializeField] private float _delayBeetweenPressed;
+        [Inject] private SceneVObjectsTable _sceneVObjectsTable;
+        [SerializeField] private VObject _activateVObject;
+        [SerializeField] private Mover _mover;
+        [SerializeField] private float _delayBeetweenPressed;
         private bool _isPressed = false;
 
         private void OnTriggerEnter(Collider other) 
@@ -32,11 +32,11 @@ namespace DoorsEcsLeo.Client
         {
             if(!_isPressed)
             {
-                Mover.MoveBackwards();
+                _mover.MoveBackwards();
             }
             else
             {
-                Mover.Move();
+                _mover.Move();
                 Activate();
             }
         }

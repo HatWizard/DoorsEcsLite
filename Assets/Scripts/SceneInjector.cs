@@ -7,7 +7,7 @@ namespace DoorsEcsLeo
 {
     public class SceneInjector : MonoInstaller
     {
-        [field: SerializeField] SceneVObjectsTable SceneVObjectsTable {get; set;}
+        [field: SerializeField] public SceneVObjectsTable SceneVObjectsTable {get; private set;}
 
         public override void InstallBindings()
         {

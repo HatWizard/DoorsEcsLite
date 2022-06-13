@@ -8,6 +8,7 @@ namespace DoorsEcsLeo
     public class InteractableVObject : VObject
     {
         private Mover _mover;
+        
         private void Awake() 
         {
             _mover = GetComponent<Mover>();
